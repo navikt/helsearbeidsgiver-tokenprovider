@@ -7,6 +7,7 @@ plugins {
     kotlin("jvm") version "1.5.30"
     kotlin("plugin.serialization") version "1.6.21"
     id("org.jmailen.kotlinter") version "3.10.0"
+    id("maven-publish")
 }
 
 group = "no.nav.helsearbeidsgiver"
@@ -41,3 +42,14 @@ tasks.named<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>("compileTestKotlin"
     kotlinOptions.jvmTarget = "11"
 }
 
+publishing {
+    repositories {
+        maven {
+            url = uri("https://maven.pkg.github.com/navikt/${rootProject.name}")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
