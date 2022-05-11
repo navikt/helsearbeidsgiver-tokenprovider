@@ -28,6 +28,9 @@ dependencies {
     implementation("no.nav.security:token-client-core:1.3.7")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
     testImplementation("io.mockk:mockk:$mockk_version")
+
+    // testImplementation(kotlin("test"))
+    testImplementation("io.ktor:ktor-client-mock:$ktor_version")
 }
 
 tasks.test {

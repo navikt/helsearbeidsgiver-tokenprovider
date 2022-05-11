@@ -1,6 +1,6 @@
 package no.nav.helsearbeidsgiver.tokenprovider
 
-import io.ktor.client.plugins.ServerResponseException
+import io.ktor.client.features.ServerResponseException
 import io.ktor.http.*
 import org.junit.Assert.assertThrows
 import org.junit.Test
