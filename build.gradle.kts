@@ -4,7 +4,7 @@ val logback_version: String by project
 val mockk_version: String by project
 
 plugins {
-    kotlin("jvm") version "1.5.30"
+    kotlin("jvm") version "1.6.21"
     kotlin("plugin.serialization") version "1.6.21"
     id("org.jmailen.kotlinter") version "3.10.0"
     id("maven-publish")
