@@ -1,3 +1,8 @@
+import java.text.SimpleDateFormat
+import java.time.ZoneId
+import java.util.Date
+import java.util.TimeZone
+
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
@@ -10,8 +15,13 @@ plugins {
     id("maven-publish")
 }
 
+// Versjonering av artifakten
+val dateFormat = SimpleDateFormat("yyyy.MM.dd-HH-mm")
+dateFormat.timeZone = TimeZone.getTimeZone(ZoneId.of("Europe/Oslo"))
+val gitHash = System.getenv("GITHUB_SHA")?.takeLast(5) ?: "local-build"
 group = "no.nav.helsearbeidsgiver"
-version = "0.1-SNAPSHOT"
+version = "${dateFormat.format(Date())}-$gitHash"
+// Versjonering av artifakten
 
 repositories {
     mavenCentral()
