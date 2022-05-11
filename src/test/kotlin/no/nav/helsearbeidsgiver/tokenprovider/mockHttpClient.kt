@@ -1,11 +1,11 @@
 package no.nav.helsearbeidsgiver.tokenprovider
 
+import io.ktor.client.*
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
-import io.ktor.http.*
-import io.ktor.client.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
+import io.ktor.http.*
 
 fun mockHttpClient(status: HttpStatusCode, content: String): HttpClient {
     val mockEngine = MockEngine { _ ->

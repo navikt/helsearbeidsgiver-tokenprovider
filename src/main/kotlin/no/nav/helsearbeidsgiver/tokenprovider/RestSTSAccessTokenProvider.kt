@@ -5,6 +5,7 @@ import com.nimbusds.jwt.JWTParser
 import io.ktor.client.*
 import io.ktor.client.request.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.Serializable
 import org.slf4j.LoggerFactory
 import java.time.Instant
 import java.util.Base64
@@ -73,6 +74,7 @@ class RestSTSAccessTokenProvider(
         val expirationTime = jwt.jwtClaimsSet.expirationTime
     }
 
+    @Serializable
     private data class STSOidcResponse(
         val access_token: String
     )
