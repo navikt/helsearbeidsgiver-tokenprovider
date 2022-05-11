@@ -2,9 +2,9 @@ package no.nav.helsearbeidsgiver.tokenprovider
 
 import io.ktor.client.features.ServerResponseException
 import io.ktor.http.*
-import org.junit.Assert.assertThrows
-import org.junit.Test
-import kotlin.test.junit.JUnitAsserter.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Test
 
 class RestSTSAccessTokenProviderTest {
 
