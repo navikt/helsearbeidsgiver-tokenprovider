@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "no.nav.helsearbeidsgiver"
-version = "0.0.1"
+version = "0.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -33,9 +33,24 @@ dependencies {
     testImplementation("io.ktor:ktor-client-mock:$ktor_version")
 }
 
-
+tasks {
+    test {
+        useJUnitPlatform()
+    }
+    lintKotlinMain {
+        exclude("no/nav/helsearbeidsgiver/arbeidsgivernotifkasjon/graphql/generated/**/*.kt")
+    }
+    formatKotlinMain {
+        exclude("no/nav/helsearbeidsgiver/arbeidsgivernotifkasjon/graphql/generated/**/*.kt")
+    }
+}
 
 publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+        }
+    }
     repositories {
         maven {
             url = uri("https://maven.pkg.github.com/navikt/${rootProject.name}")
