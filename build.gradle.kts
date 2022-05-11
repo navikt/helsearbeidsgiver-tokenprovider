@@ -19,30 +19,19 @@ repositories {
 }
 
 dependencies {
-    // runtimeOnly("ch.qos.logback:logback-classic:$logback_version")
     testImplementation(kotlin("test"))
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-json:$ktor_version")
     implementation("io.ktor:ktor-client-serialization:$ktor_version")
     testImplementation("io.ktor:ktor-client-mock:$ktor_version")
-
-
-    // implementation("io.ktor:ktor-client-cio:$ktor_version")
-    implementation("com.nimbusds:nimbus-jose-jwt:8.21.1")
-    implementation("no.nav.security:token-client-core:1.3.7")
-    //testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    implementation("com.nimbusds:nimbus-jose-jwt:9.22")
+    implementation("no.nav.security:token-client-core:2.0.15")
     testImplementation("io.mockk:mockk:$mockk_version")
 }
 
 tasks {
     test {
         useJUnitPlatform()
-    }
-    lintKotlinMain {
-        exclude("no/nav/helsearbeidsgiver/arbeidsgivernotifkasjon/graphql/generated/**/*.kt")
-    }
-    formatKotlinMain {
-        exclude("no/nav/helsearbeidsgiver/arbeidsgivernotifkasjon/graphql/generated/**/*.kt")
     }
 }
 
