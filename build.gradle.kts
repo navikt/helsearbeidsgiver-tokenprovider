@@ -4,7 +4,7 @@ val logback_version: String by project
 val mockk_version: String by project
 
 plugins {
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm") version "1.5.30"
     kotlin("plugin.serialization") version "1.6.21"
     id("org.jmailen.kotlinter") version "3.10.0"
 }
@@ -23,16 +23,21 @@ dependencies {
     implementation("io.ktor:ktor-client-serialization:$ktor_version")
     implementation("io.ktor:ktor-client-json:$ktor_version")
     implementation("com.nimbusds:nimbus-jose-jwt:8.21.1")
-    implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("no.nav.security:token-client-core:1.3.7")
-    testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
     testImplementation("io.mockk:mockk:$mockk_version")
 }
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.named<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>("compileKotlin") {
+    kotlinOptions.jvmTarget = "11"
+}
+
+tasks.named<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>("compileTestKotlin") {
+    kotlinOptions.jvmTarget = "11"
 }
 

@@ -2,7 +2,8 @@ package no.nav.helsearbeidsgiver.tokenprovider
 
 import com.nimbusds.jwt.JWT
 import com.nimbusds.jwt.JWTParser
-import io.ktor.client.HttpClient
+import io.ktor.client.*
+import io.ktor.client.request.*
 import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import java.time.Instant
