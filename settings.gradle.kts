@@ -1,1 +1,1 @@
-rootProject.name = "helsearbeidsgiver-tokenprovider"
+rootProject.name = "tokenprovider"
