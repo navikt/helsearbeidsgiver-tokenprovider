@@ -2,8 +2,9 @@ package no.nav.helsearbeidsgiver.tokenprovider
 
 import com.nimbusds.jwt.JWT
 import com.nimbusds.jwt.JWTParser
-import io.ktor.client.*
-import io.ktor.client.request.*
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.headers
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import org.slf4j.LoggerFactory
@@ -23,10 +24,10 @@ import java.util.Date
 class RestSTSAccessTokenProvider(
     username: String,
     password: String,
-    stsEndpoint: String,
-    private val httpClient: HttpClient
+    stsEndpoint: String
 ) : AccessTokenProvider {
 
+    private val httpClient = createHttpClient()
     private val endpointURI: String
     private val basicAuth: String
 
@@ -35,25 +36,28 @@ class RestSTSAccessTokenProvider(
     init {
         basicAuth = basicAuth(username, password)
         endpointURI = "$stsEndpoint?grant_type=client_credentials&scope=openid"
-        currentToken = requestToken()
+        currentToken = runBlocking { requestToken() }
     }
 
     override fun getToken(): String {
         if (isExpired(currentToken, Date.from(Instant.now().plusSeconds(300)))) {
             log.debug("OIDC Token is expired, getting a new one from the STS")
-            currentToken = requestToken()
+            currentToken = runBlocking { requestToken() }
             log.debug("Hentet nytt token fra sts som går ut ${currentToken.expirationTime}")
         }
         return currentToken.tokenAsString
     }
 
-    private fun requestToken(): JwtToken {
+    private suspend fun requestToken(): JwtToken {
         val response = runBlocking {
-            httpClient.get<STSOidcResponse>(endpointURI) {
-                headers.append("Authorization", basicAuth)
-                headers.append("Accept", "application/json")
+            httpClient.get(endpointURI) {
+                headers {
+                    append("Authorization", basicAuth)
+                    append("Accept", "application/json")
+                }
             }
         }
+            .body<STSOidcResponse>()
 
         return JwtToken(response.access_token)
     }

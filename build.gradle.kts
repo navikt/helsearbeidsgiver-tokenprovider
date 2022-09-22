@@ -1,17 +1,30 @@
-val ktor_version: String by project
-val kotlin_version: String by project
-val logback_version: String by project
-val mockk_version: String by project
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+group = "no.nav.helsearbeidsgiver"
+version = "0.2.0"
 
 plugins {
-    kotlin("jvm") version "1.6.21"
-    kotlin("plugin.serialization") version "1.6.21"
-    id("org.jmailen.kotlinter") version "3.10.0"
+    kotlin("jvm")
+    kotlin("plugin.serialization")
+    id("org.jmailen.kotlinter")
     id("maven-publish")
 }
 
-group = "no.nav.helsearbeidsgiver"
-version = "0.1.5"
+tasks {
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "11"
+    }
+    test {
+        useJUnitPlatform()
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+
+    withSourcesJar()
+}
 
 repositories {
     mavenCentral()
@@ -19,20 +32,24 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
-    implementation("io.ktor:ktor-client-core:$ktor_version")
-    implementation("io.ktor:ktor-client-json:$ktor_version")
-    implementation("io.ktor:ktor-client-serialization:$ktor_version")
-    testImplementation("io.ktor:ktor-client-mock:$ktor_version")
-    implementation("com.nimbusds:nimbus-jose-jwt:9.22")
-    implementation("no.nav.security:token-client-core:2.0.15")
-    testImplementation("io.mockk:mockk:$mockk_version")
-}
+    val ktorVersion: String by project
+    val mockkVersion: String by project
+    val kotlinSerializationVersion: String by project
+    val coroutinesVersion: String by project
+    val junitJupiterVersion: String by project
 
-tasks {
-    test {
-        useJUnitPlatform()
-    }
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion")
+
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-client-core:$ktorVersion")
+    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+    implementation("no.nav.security:token-client-core:2.1.4")
+
+    testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>() {
@@ -46,12 +63,18 @@ publishing {
         }
     }
     repositories {
-        maven {
-            url = uri("https://maven.pkg.github.com/navikt/helsearbeidsgiver-${rootProject.name}")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
+        mavenNav("helsearbeidsgiver-${rootProject.name}")
+    }
+}
+
+fun RepositoryHandler.mavenNav(repo: String): MavenArtifactRepository {
+    val githubPassword: String by project
+
+    return maven {
+        setUrl("https://maven.pkg.github.com/navikt/$repo")
+        credentials {
+            username = "x-access-token"
+            password = githubPassword
         }
     }
 }
