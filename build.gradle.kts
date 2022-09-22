@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "no.nav.helsearbeidsgiver"
-version = "0.2.2"
+version = "0.2.3"
 
 plugins {
     kotlin("jvm")
@@ -38,8 +38,14 @@ dependencies {
     val junitJupiterVersion: String by project
     val tokenClientCoreVersion: String by project
     val nimbusJoseJwtVersion: String by project
+    val logbackVersion: String by project
+    val slf4jVersion: String by project
 
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion")
+
+    runtimeOnly("ch.qos.logback:logback-classic:$logbackVersion")
+
+    implementation("org.slf4j:slf4j-api:$slf4jVersion")
 
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-client-core:$ktorVersion")
