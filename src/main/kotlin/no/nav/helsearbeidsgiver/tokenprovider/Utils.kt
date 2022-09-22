@@ -9,7 +9,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
 internal fun createHttpClient(): HttpClient =
-    HttpClient(OkHttp) { configureJsonHandler() }
+    HttpClient(OkHttp) { configureJsonHandler().also { expectSuccess = true } }
 
 @OptIn(ExperimentalSerializationApi::class)
 internal fun HttpClientConfig<*>.configureJsonHandler() {
