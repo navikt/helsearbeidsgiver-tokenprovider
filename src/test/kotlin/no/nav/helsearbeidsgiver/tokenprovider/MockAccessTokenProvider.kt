@@ -26,9 +26,7 @@ fun mockAccessTokenProvider(status: HttpStatusCode, content: String): RestSTSAcc
     }
 
     val mockHttpClient = HttpClient(mockEngine) {
-        configureJsonHandler().also {
-            expectSuccess = true
-        }
+        configureClientConfig()
     }
 
     return mockFn(::createHttpClient) {

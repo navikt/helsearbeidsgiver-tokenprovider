@@ -3,13 +3,15 @@ package no.nav.helsearbeidsgiver.tokenprovider
 import com.nimbusds.jwt.JWT
 import com.nimbusds.jwt.JWTParser
 import io.ktor.client.call.body
+import io.ktor.client.request.basicAuth
 import io.ktor.client.request.get
-import io.ktor.client.request.headers
+import io.ktor.client.request.header
+import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import org.slf4j.LoggerFactory
 import java.time.Instant
-import java.util.Base64
 import java.util.Date
 
 /**
@@ -22,19 +24,17 @@ import java.util.Date
  * STS skal fases ut til fordel for OAuth2 Client Credentials og Token Exchange (TokenX)
  */
 class RestSTSAccessTokenProvider(
-    username: String,
-    password: String,
+    private val username: String,
+    private val password: String,
     stsEndpoint: String
 ) : AccessTokenProvider {
 
     private val httpClient = createHttpClient()
     private val endpointURI: String
-    private val basicAuth: String
 
     private var currentToken: JwtToken
 
     init {
-        basicAuth = basicAuth(username, password)
         endpointURI = "$stsEndpoint?grant_type=client_credentials&scope=openid"
         currentToken = runBlocking { requestToken() }
     }
@@ -51,20 +51,13 @@ class RestSTSAccessTokenProvider(
     private suspend fun requestToken(): JwtToken {
         val response = runBlocking {
             httpClient.get(endpointURI) {
-                headers {
-                    append("Authorization", basicAuth)
-                    append("Accept", "application/json")
-                }
+                header(HttpHeaders.Accept, ContentType.Application.Json.toString())
+                basicAuth(username = username, password = password)
             }
         }
             .body<STSOidcResponse>()
 
         return JwtToken(response.access_token)
-    }
-
-    private fun basicAuth(username: String, password: String): String {
-        log.debug("basic auth username: $username")
-        return "Basic " + Base64.getEncoder().encodeToString("$username:$password".toByteArray())
     }
 
     private fun isExpired(jwtToken: JwtToken, date: Date): Boolean {
