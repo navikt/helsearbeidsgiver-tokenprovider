@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "no.nav.helsearbeidsgiver"
-version = "0.2.3"
+version = "0.2.4"
 
 plugins {
     kotlin("jvm")
@@ -52,6 +52,7 @@ dependencies {
     implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
     implementation("no.nav.security:token-client-core:$tokenClientCoreVersion")
+    implementation("no.nav.security:token-validation-ktor-v2:$tokenClientCoreVersion")
     implementation("com.nimbusds:nimbus-jose-jwt:$nimbusJoseJwtVersion")
 
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")

@@ -41,9 +41,9 @@ class RestSTSAccessTokenProvider(
 
     override fun getToken(): String {
         if (isExpired(currentToken, Date.from(Instant.now().plusSeconds(300)))) {
-            log.debug("OIDC Token is expired, getting a new one from the STS")
+            logger.debug("OIDC Token is expired, getting a new one from the STS")
             currentToken = runBlocking { requestToken() }
-            log.debug("Hentet nytt token fra sts som går ut ${currentToken.expirationTime}")
+            logger.debug("Hentet nytt token fra sts som går ut ${currentToken.expirationTime}")
         }
         return currentToken.tokenAsString
     }
@@ -77,6 +77,6 @@ class RestSTSAccessTokenProvider(
     )
 
     companion object {
-        private val log = LoggerFactory.getLogger(RestSTSAccessTokenProvider::class.java)
+        private val logger = LoggerFactory.getLogger(RestSTSAccessTokenProvider::class.java)
     }
 }
