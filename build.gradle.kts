@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "no.nav.helsearbeidsgiver"
-version = "0.2.1"
+version = "0.2.2"
 
 plugins {
     kotlin("jvm")
@@ -36,6 +36,7 @@ dependencies {
     val kotlinSerializationVersion: String by project
     val coroutinesVersion: String by project
     val junitJupiterVersion: String by project
+    val tokenClientCore: String by project
 
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion")
 
@@ -43,7 +44,7 @@ dependencies {
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-    implementation("no.nav.security:token-client-core:2.1.4")
+    implementation("no.nav.security:token-client-core:$tokenClientCore")
 
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
