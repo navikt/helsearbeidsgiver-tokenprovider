@@ -9,7 +9,6 @@ import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.Serializable
 import org.slf4j.LoggerFactory
 import java.time.Instant
 import java.util.Date
@@ -71,7 +70,6 @@ class RestSTSAccessTokenProvider(
         val expirationTime = jwt.jwtClaimsSet.expirationTime
     }
 
-    @Serializable
     private data class STSOidcResponse(
         val access_token: String
     )
