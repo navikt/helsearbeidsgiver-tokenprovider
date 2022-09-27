@@ -1,11 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "no.nav.helsearbeidsgiver"
-version = "0.2.5"
+version = "0.2.6"
 
 plugins {
     kotlin("jvm")
-    kotlin("plugin.serialization")
     id("org.jmailen.kotlinter")
     id("maven-publish")
 }
@@ -40,6 +39,7 @@ dependencies {
     val nimbusJoseJwtVersion: String by project
     val logbackVersion: String by project
     val slf4jVersion: String by project
+    val jacksonVersion: String by project
 
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion")
 
@@ -50,10 +50,11 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-jackson:$ktorVersion")
     implementation("no.nav.security:token-client-core:$tokenClientCoreVersion")
     implementation("no.nav.security:token-validation-ktor-v2:$tokenClientCoreVersion")
     implementation("com.nimbusds:nimbus-jose-jwt:$nimbusJoseJwtVersion")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
 
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
