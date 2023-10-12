@@ -8,8 +8,7 @@ import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.jackson.jackson
 
-internal fun createHttpClient(): HttpClient =
-    HttpClient(OkHttp) { configureClientConfig() }
+internal fun createHttpClient(): HttpClient = HttpClient(OkHttp) { configureClientConfig() }
 
 internal fun HttpClientConfig<*>.configureClientConfig() {
     expectSuccess = true
@@ -21,5 +20,4 @@ internal fun HttpClientConfig<*>.configureClientConfig() {
     }
 }
 
-internal fun String.readResource(): String =
-    ClassLoader.getSystemResource(this).readText()
+internal fun String.readResource(): String = ClassLoader.getSystemResource(this).readText()

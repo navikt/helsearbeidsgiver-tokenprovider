@@ -16,18 +16,23 @@ object MockResponse {
     val validStsResponse = "sts-mock-data/valid-sts-token.json".readResource()
 }
 
-fun mockAccessTokenProvider(status: HttpStatusCode, content: String): RestSTSAccessTokenProvider {
-    val mockEngine = MockEngine {
-        respond(
-            content = content,
-            status = status,
-            headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
-        )
-    }
+fun mockAccessTokenProvider(
+    status: HttpStatusCode,
+    content: String,
+): RestSTSAccessTokenProvider {
+    val mockEngine =
+        MockEngine {
+            respond(
+                content = content,
+                status = status,
+                headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString()),
+            )
+        }
 
-    val mockHttpClient = HttpClient(mockEngine) {
-        configureClientConfig()
-    }
+    val mockHttpClient =
+        HttpClient(mockEngine) {
+            configureClientConfig()
+        }
 
     return mockFn(::createHttpClient) {
         every { createHttpClient() } returns mockHttpClient
@@ -35,7 +40,10 @@ fun mockAccessTokenProvider(status: HttpStatusCode, content: String): RestSTSAcc
     }
 }
 
-private fun <T> mockFn(fn: KFunction<*>, block: () -> T): T {
+private fun <T> mockFn(
+    fn: KFunction<*>,
+    block: () -> T,
+): T {
     mockkStatic(fn)
     return try {
         block()
