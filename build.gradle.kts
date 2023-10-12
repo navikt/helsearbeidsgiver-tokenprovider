@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 group = "no.nav.helsearbeidsgiver"
 version = "0.3.0"
@@ -9,20 +9,20 @@ plugins {
     id("maven-publish")
 }
 
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-    }
-    test {
-        useJUnitPlatform()
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-
     withSourcesJar()
+}
+
+tasks {
+    test {
+        useJUnitPlatform()
+    }
 }
 
 repositories {
@@ -47,9 +47,9 @@ dependencies {
 
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
 
+    implementation("io.ktor:ktor-client-apache5:$ktorVersion")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-client-core:$ktorVersion")
-    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
     implementation("io.ktor:ktor-serialization-jackson:$ktorVersion")
     implementation("no.nav.security:token-client-core:$tokenClientCoreVersion")
     implementation("no.nav.security:token-validation-ktor-v2:$tokenClientCoreVersion")
