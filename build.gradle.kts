@@ -41,7 +41,6 @@ dependencies {
     val slf4jVersion: String by project
     val jacksonVersion: String by project
 
-
     runtimeOnly("ch.qos.logback:logback-classic:$logbackVersion")
 
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
