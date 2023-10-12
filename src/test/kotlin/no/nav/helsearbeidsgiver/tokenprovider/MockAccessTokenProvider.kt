@@ -8,9 +8,8 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.mockk.every
-import io.mockk.mockkStatic
-import io.mockk.unmockkStatic
-import kotlin.reflect.KFunction
+import no.nav.helsearbeidsgiver.utils.test.mock.mockStatic
+import no.nav.helsearbeidsgiver.utils.test.resource.readResource
 
 object MockResponse {
     val validStsResponse = "sts-mock-data/valid-sts-token.json".readResource()
@@ -29,17 +28,8 @@ fun mockAccessTokenProvider(status: HttpStatusCode, content: String): RestSTSAcc
         configureClientConfig()
     }
 
-    return mockFn(::createHttpClient) {
+    return mockStatic(::createHttpClient) {
         every { createHttpClient() } returns mockHttpClient
         RestSTSAccessTokenProvider("", "", "")
-    }
-}
-
-private fun <T> mockFn(fn: KFunction<*>, block: () -> T): T {
-    mockkStatic(fn)
-    return try {
-        block()
-    } finally {
-        unmockkStatic(fn)
     }
 }
