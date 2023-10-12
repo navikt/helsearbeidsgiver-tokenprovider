@@ -32,8 +32,8 @@ repositories {
 dependencies {
     val ktorVersion: String by project
     val mockkVersion: String by project
+    val kotlinCoroutinesVersion: String by project
     val kotlinSerializationVersion: String by project
-    val coroutinesVersion: String by project
     val junitJupiterVersion: String by project
     val tokenClientCoreVersion: String by project
     val nimbusJoseJwtVersion: String by project
@@ -41,24 +41,23 @@ dependencies {
     val slf4jVersion: String by project
     val jacksonVersion: String by project
 
-    api("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion")
 
     runtimeOnly("ch.qos.logback:logback-classic:$logbackVersion")
 
-    implementation("org.slf4j:slf4j-api:$slf4jVersion")
-
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
+    implementation("com.nimbusds:nimbus-jose-jwt:$nimbusJoseJwtVersion")
     implementation("io.ktor:ktor-client-apache5:$ktorVersion")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-serialization-jackson:$ktorVersion")
     implementation("no.nav.security:token-client-core:$tokenClientCoreVersion")
     implementation("no.nav.security:token-validation-ktor-v2:$tokenClientCoreVersion")
-    implementation("com.nimbusds:nimbus-jose-jwt:$nimbusJoseJwtVersion")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion")
+    implementation("org.slf4j:slf4j-api:$slf4jVersion")
 
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
     testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
 }
 
