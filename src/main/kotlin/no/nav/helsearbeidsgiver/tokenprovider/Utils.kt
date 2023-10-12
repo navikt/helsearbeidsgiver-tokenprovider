@@ -4,12 +4,12 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
-import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.engine.apache5.Apache5
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.jackson.jackson
 
 internal fun createHttpClient(): HttpClient =
-    HttpClient(OkHttp) { configureClientConfig() }
+    HttpClient(Apache5) { configureClientConfig() }
 
 internal fun HttpClientConfig<*>.configureClientConfig() {
     expectSuccess = true
