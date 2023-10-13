@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
 class RestSTSAccessTokenProviderTest {
-
     @Test
     internal fun `valid answer from STS returns valid token, second call gives cached answer`() {
         assertNotNull("", mockAccessTokenProvider(HttpStatusCode.OK, MockResponse.validStsResponse).getToken())

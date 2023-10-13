@@ -8,8 +8,7 @@ import io.ktor.client.engine.apache5.Apache5
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.jackson.jackson
 
-internal fun createHttpClient(): HttpClient =
-    HttpClient(Apache5) { configureClientConfig() }
+internal fun createHttpClient(): HttpClient = HttpClient(Apache5) { configureClientConfig() }
 
 internal fun HttpClientConfig<*>.configureClientConfig() {
     expectSuccess = true

@@ -25,9 +25,8 @@ import java.util.Date
 class RestSTSAccessTokenProvider(
     private val username: String,
     private val password: String,
-    stsEndpoint: String
+    stsEndpoint: String,
 ) : AccessTokenProvider {
-
     private val httpClient = createHttpClient()
     private val endpointURI: String
 
@@ -48,18 +47,22 @@ class RestSTSAccessTokenProvider(
     }
 
     private suspend fun requestToken(): JwtToken {
-        val response = runBlocking {
-            httpClient.get(endpointURI) {
-                header(HttpHeaders.Accept, ContentType.Application.Json.toString())
-                basicAuth(username = username, password = password)
+        val response =
+            runBlocking {
+                httpClient.get(endpointURI) {
+                    header(HttpHeaders.Accept, ContentType.Application.Json.toString())
+                    basicAuth(username = username, password = password)
+                }
             }
-        }
-            .body<STSOidcResponse>()
+                .body<STSOidcResponse>()
 
         return JwtToken(response.access_token)
     }
 
-    private fun isExpired(jwtToken: JwtToken, date: Date): Boolean {
+    private fun isExpired(
+        jwtToken: JwtToken,
+        date: Date,
+    ): Boolean {
         return date.after(jwtToken.expirationTime) &&
             jwtToken.expirationTime.before(date)
     }
@@ -71,7 +74,7 @@ class RestSTSAccessTokenProvider(
     }
 
     private data class STSOidcResponse(
-        val access_token: String
+        val access_token: String,
     )
 
     companion object {
