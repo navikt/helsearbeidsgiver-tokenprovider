@@ -8,7 +8,7 @@ import no.nav.security.token.support.client.core.oauth2.OAuth2AccessTokenService
  */
 class OAuth2TokenProvider(
     private val oauth2Service: OAuth2AccessTokenService,
-    private val clientProperties: ClientProperties
+    private val clientProperties: ClientProperties,
 ) : AccessTokenProvider {
     override fun getToken(): String {
         return oauth2Service.getAccessToken(clientProperties).accessToken

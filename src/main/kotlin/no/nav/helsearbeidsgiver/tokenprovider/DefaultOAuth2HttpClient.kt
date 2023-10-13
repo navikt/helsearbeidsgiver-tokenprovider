@@ -18,11 +18,12 @@ class DefaultOAuth2HttpClient() : OAuth2HttpClient {
             try {
                 return@runBlocking httpClient.submitForm(
                     url = oAuth2HttpRequest.tokenEndpointUrl.toString(),
-                    formParameters = Parameters.build {
-                        oAuth2HttpRequest.formParameters.forEach {
-                            append(it.key, it.value)
-                        }
-                    }
+                    formParameters =
+                        Parameters.build {
+                            oAuth2HttpRequest.formParameters.forEach {
+                                append(it.key, it.value)
+                            }
+                        },
                 ).body<OAuth2AccessTokenResponse>()
             } catch (ex: Exception) {
                 if (ex is ClientRequestException) {
