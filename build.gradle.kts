@@ -27,6 +27,7 @@ tasks {
 
 repositories {
     mavenCentral()
+    mavenNav("*")
 }
 
 dependencies {
@@ -40,6 +41,7 @@ dependencies {
     val logbackVersion: String by project
     val slf4jVersion: String by project
     val jacksonVersion: String by project
+    val hagUtilsVersion: String by project
 
     runtimeOnly("ch.qos.logback:logback-classic:$logbackVersion")
 
@@ -49,11 +51,13 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-serialization-jackson:$ktorVersion")
+    implementation("no.nav.helsearbeidsgiver:utils:$hagUtilsVersion")
     implementation("no.nav.security:token-client-core:$tokenClientCoreVersion")
     implementation("no.nav.security:token-validation-ktor-v2:$tokenClientCoreVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion")
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
 
+    testImplementation(testFixtures("no.nav.helsearbeidsgiver:utils:$hagUtilsVersion"))
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")

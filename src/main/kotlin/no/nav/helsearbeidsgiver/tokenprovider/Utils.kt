@@ -19,5 +19,3 @@ internal fun HttpClientConfig<*>.configureClientConfig() {
         }
     }
 }
-
-internal fun String.readResource(): String = ClassLoader.getSystemResource(this).readText()
