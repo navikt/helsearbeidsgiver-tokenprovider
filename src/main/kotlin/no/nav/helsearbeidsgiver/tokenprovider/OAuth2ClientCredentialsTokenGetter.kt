@@ -14,8 +14,8 @@ fun oauth2ClientCredentialsTokenGetter(
 
     return {
         tokenClient.getTokenResponse(request).accessToken
-            ?: throw EmptyAccessTokenException()
+            ?: throw MissingAccessTokenException()
     }
 }
 
-class EmptyAccessTokenException : Exception()
+class MissingAccessTokenException : Exception()
