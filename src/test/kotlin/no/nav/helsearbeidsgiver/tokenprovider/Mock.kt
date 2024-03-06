@@ -43,7 +43,7 @@ object Mock {
             }
 
         return HttpClient(mockEngine) {
-            configureClientConfig()
+            customConfig()
         }
     }
 }
