@@ -33,8 +33,10 @@ repositories {
 dependencies {
     val hagUtilsVersion: String by project
     val jacksonVersion: String by project
+    val kotestVersion: String by project
     val ktorVersion: String by project
     val logbackVersion: String by project
+    val mockkVersion: String by project
     val nimbusJoseJwtVersion: String by project
     val tokenClientCoreVersion: String by project
 
@@ -50,6 +52,12 @@ dependencies {
     implementation("no.nav.security:token-validation-ktor-v2:$tokenClientCoreVersion")
 
     runtimeOnly("ch.qos.logback:logback-classic:$logbackVersion")
+
+    testImplementation(testFixtures("no.nav.helsearbeidsgiver:utils:$hagUtilsVersion"))
+    testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 }
 
 publishing {
