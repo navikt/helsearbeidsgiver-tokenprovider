@@ -31,37 +31,33 @@ repositories {
 }
 
 dependencies {
-    val ktorVersion: String by project
-    val mockkVersion: String by project
-    val kotlinCoroutinesVersion: String by project
-    val kotlinSerializationVersion: String by project
-    val junitJupiterVersion: String by project
-    val tokenClientCoreVersion: String by project
-    val nimbusJoseJwtVersion: String by project
-    val logbackVersion: String by project
-    val slf4jVersion: String by project
-    val jacksonVersion: String by project
     val hagUtilsVersion: String by project
+    val jacksonVersion: String by project
+    val kotestVersion: String by project
+    val ktorVersion: String by project
+    val logbackVersion: String by project
+    val mockkVersion: String by project
+    val nimbusJoseJwtVersion: String by project
+    val tokenClientCoreVersion: String by project
 
-    runtimeOnly("ch.qos.logback:logback-classic:$logbackVersion")
+    api("io.ktor:ktor-client-core:$ktorVersion")
 
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
     implementation("com.nimbusds:nimbus-jose-jwt:$nimbusJoseJwtVersion")
     implementation("io.ktor:ktor-client-apache5:$ktorVersion")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-    implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-serialization-jackson:$ktorVersion")
     implementation("no.nav.helsearbeidsgiver:utils:$hagUtilsVersion")
     implementation("no.nav.security:token-client-core:$tokenClientCoreVersion")
     implementation("no.nav.security:token-validation-ktor-v2:$tokenClientCoreVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion")
-    implementation("org.slf4j:slf4j-api:$slf4jVersion")
+
+    runtimeOnly("ch.qos.logback:logback-classic:$logbackVersion")
 
     testImplementation(testFixtures("no.nav.helsearbeidsgiver:utils:$hagUtilsVersion"))
-    testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
+    testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
+    testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
 }
 
 publishing {
