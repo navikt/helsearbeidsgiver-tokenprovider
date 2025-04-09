@@ -1,5 +1,7 @@
 # helsearbeidsgiver-tokenprovider
 
+### ⚠️ **Dette biblioteket er utdatert. Bruken har blitt erstattet av Nais-verktøyet [Texas](https://doc.nav.cloud.nais.io/auth/explanations/#texas).** ⚠️
+
 Denne pakken inneholder hjelpemetoder for å hente OAuth2-token for tilgang mellom apper (med grant type "client_credentials").
 
 Verdiene som er påkrevd i `OAuth2Environment` finnes typisk som systemvaribler.
